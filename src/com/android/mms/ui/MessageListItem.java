@@ -402,7 +402,8 @@ public class MessageListItem extends LinearLayout implements
         buf.setSpan(mSpan, startOffset+1, buf.length(), 0);
 
         // Make the timestamp text not as dark
-        buf.setSpan(mColorSpan, startOffset, buf.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		int colorc = mContext.getResources().getColor(R.color.timestamp_color_grey);
+		buf.setSpan(new ForegroundColorSpan(colorc), startOffset, buf.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         if (highlight != null) {
             Matcher m = highlight.matcher(buf.toString());
