@@ -53,7 +53,7 @@ public class MessageStatusReceiver extends BroadcastReceiver {
             // Called on the UI thread so don't block.
 			if (message.getStatus() < Sms.STATUS_PENDING)
 				MessagingNotification.nonBlockingUpdateNewMessageIndicator(context,
-						true, message.isStatusReportMessage();
+						true, message.isStatusReportMessage());
        }
     }
 
