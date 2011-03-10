@@ -59,7 +59,7 @@ public class PushReceiver extends BroadcastReceiver {
     private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
 	
 	private static final String[] ADDRESS_PROJECTION = new String[] {
-	Mms.Addr.ADDRESS };
+		Mms.Addr.ADDRESS };
 	
 	// These must be consistent with ADDRESS_PROJECTION
 	private static final int COLUMN_ADDRESS = 0;
@@ -222,11 +222,11 @@ public class PushReceiver extends BroadcastReceiver {
                 Uri uri = Uri.withAppendedPath(Mms.CONTENT_URI, pduUri.getLastPathSegment());
                 uri = Uri.withAppendedPath(uri, "addr");
                 Cursor cursor = context.getContentResolver().query(uri, ADDRESS_PROJECTION,
-																   null, null, null);
+																null, null, null);
                 try {
                     if (cursor != null && cursor.moveToFirst()) {
                         MessagingNotification.nonBlockingShowDelivery(context,
-																	  cursor.getString(COLUMN_ADDRESS));
+											cursor.getString(COLUMN_ADDRESS));
                     }
                 } finally {
                     if (cursor != null) {

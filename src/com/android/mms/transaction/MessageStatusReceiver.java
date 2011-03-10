@@ -51,9 +51,9 @@ public class MessageStatusReceiver extends BroadcastReceiver {
             SmsMessage message = updateMessageStatus(context, messageUri, pdu);
 
             // Called on the UI thread so don't block.
-			if (message.getStatus() < Sms.STATUS_PENDING)
-				MessagingNotification.nonBlockingUpdateNewMessageIndicator(context,
-						true, message.isStatusReportMessage());
+            if (message.getStatus() < Sms.STATUS_PENDING)
+                MessagingNotification.nonBlockingUpdateNewMessageIndicator(context,
+                        true, message.isStatusReportMessage());
        }
     }
 
@@ -62,9 +62,8 @@ public class MessageStatusReceiver extends BroadcastReceiver {
         // message's status in the database.
         Cursor cursor = SqliteWrapper.query(context, context.getContentResolver(),
                             messageUri, ID_PROJECTION, null, null, null);
-																		   
-		SmsMessage message = SmsMessage.createFromPdu(pdu);
-																		   
+        SmsMessage message = SmsMessage.createFromPdu(pdu);
+
         try {
             if (cursor.moveToFirst()) {
                 int messageId = cursor.getInt(0);
@@ -82,13 +81,9 @@ public class MessageStatusReceiver extends BroadcastReceiver {
                 contentValues.put(Sms.STATUS, status);
                 SqliteWrapper.update(context, context.getContentResolver(),
                                     updateUri, contentValues, null, null);
-                // Status is only changed to STATUS_COMPLETE once. We call this every
-                // time this happens to ensure that we get a notification for each
-                // delivery and not just the latest one if several messages change
-                // status at the same time. This call is non blocking since we are in UI thread.
-                if (status == Sms.STATUS_COMPLETE) {
-                    MessagingNotification.nonBlockingShowDelivery(context, cursor.getString(1));
-                }
+				if (status == Sms.STATUS_COMPLETE) {
+					MessagingNotification.nonBlockingShowDelivery(context, cursor.getString(1));
+				}
             } else {
                 error("Can't find message for status update: " + messageUri);
             }

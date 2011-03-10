@@ -24,7 +24,6 @@ import android.content.AsyncQueryHandler;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,7 +31,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Data;
@@ -131,7 +129,6 @@ public class MessageListAdapter extends CursorAdapter {
     private Handler mMsgListItemHandler;
     private Pattern mHighlight;
     private Context mContext;
-	private boolean mFullTimestamp;
 
     private HashMap<String, HashSet<MessageListItem>> mAddressToMessageListItems
         = new HashMap<String, HashSet<MessageListItem>>();
@@ -159,9 +156,6 @@ public class MessageListAdapter extends CursorAdapter {
         } else {
             mColumnsMap = new ColumnsMap(c);
         }
-		
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		mFullTimestamp = prefs.getBoolean(MessagingPreferenceActivity.FULL_TIMESTAMP, false);
 
         mAvatarCache = new AvatarCache();
     }
@@ -265,7 +259,7 @@ public class MessageListAdapter extends CursorAdapter {
         MessageItem item = mMessageItemCache.get(getKey(type, msgId));
         if (item == null && c != null && isCursorValid(c)) {
             try {
-                item = new MessageItem(mContext, type, c, mColumnsMap, mHighlight, mFullTimestamp);
+                item = new MessageItem(mContext, type, c, mColumnsMap, mHighlight);
                 mMessageItemCache.put(getKey(item.mType, item.mMsgId), item);
             } catch (MmsException e) {
                 Log.e(TAG, "getCachedMessageItem: ", e);

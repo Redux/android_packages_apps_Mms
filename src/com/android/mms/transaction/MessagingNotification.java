@@ -200,7 +200,6 @@ public class MessagingNotification {
 
         // And deals with delivery reports (which use Toasts). It's safe to call in a worker
         // thread because the toast will eventually get posted to a handler.
-		// Oh no it doesn't since this design is so bad
         //delivery = getSmsNewDeliveryInfo(context);
         //if (delivery != null) {
         //    delivery.deliver(context, isStatusMessage);
@@ -234,9 +233,9 @@ public class MessagingNotification {
 				   return;
 				}
 				Uri uri = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI,
-										Uri.encode(address));
+						Uri.encode(address));
 				Cursor cursor = context.getContentResolver().query(uri,
-										LOOKUP_PROJECTION, null, null, null);
+							LOOKUP_PROJECTION, null, null, null);
 				String recipient;
 				try {
 				   if (cursor != null && cursor.moveToFirst()) {
@@ -252,7 +251,7 @@ public class MessagingNotification {
 				}
 				   
 				final String message = String.format(context.getString(R.string.delivery_toast_body),
-													recipient);
+									recipient);
 				mToastHandler.post(new Runnable() {
 					public void run() {
 						Toast.makeText(context, message, 3000).show();
