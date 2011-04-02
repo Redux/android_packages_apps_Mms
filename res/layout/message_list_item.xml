@@ -23,7 +23,8 @@
     android:id="@+id/msg_list_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="#ff000000">
 
     <LinearLayout android:id="@+id/mms_layout_view_parent"
         android:paddingLeft="5dip"
@@ -51,7 +52,8 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="#ffffffff"
                 android:textSize="18sp"
-                android:background="@drawable/listitem_background" />
+                android:background="@drawable/listitem_background"
+                android:cacheColorHint="#00000000" />
 
             <android.widget.QuickContactBadge
                 android:layout_marginLeft="0dip"
